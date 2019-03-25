@@ -1,0 +1,37 @@
+{% extends "catalog/layout.html" %}
+{% load static from static %}
+{% load course_extras %}
+
+{% block title %}Detail Page{% endblock %}
+
+{% block class %}bounds--small{% endblock %}
+
+{% block content %}
+
+<div class="grid-100 mineral__container">
+    {% for value in minerals %}
+        <h1 class="mineral__name">{{ value.name }}</h1>
+        <div class="mineral__image-bg">
+            <img class="mineral__image" src="{% static 'catalog/media/'|add:value.name|add:'.jpg' %}" alt="{{ value.image_caption }}">
+            <p class="mineral__caption">{{ value.image_caption }}</p>
+        </div>
+    {% endfor %}
+        <div class="mineral__table-container">
+            <table class="mineral__table">
+                <tbody>
+                    {% for key, value in dict_minerals.items %}
+                    {% if value != "" %}
+                    {% if key != "id" and key != "image_filename" and key != "image_caption" and key != "name" %}
+                        <tr>
+                            <td class="mineral__category">{{ key|strip_underline|title_case }}</td>
+                            <td>{{ value|safe }}</td>
+                        </tr>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+</div>
+
+{% endblock %}

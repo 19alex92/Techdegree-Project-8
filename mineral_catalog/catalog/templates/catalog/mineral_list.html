@@ -1,0 +1,24 @@
+{% extends "catalog/layout.html" %}
+{% load static from static %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+
+<div class="grid-100">
+    <ul class="minerals__container">
+        {% for value in minerals %}
+        <li class="minerals__item">
+            <a class="minerals__anchor" href="{% url 'catalog:detail' name=value.name pk=value.pk %}">
+            {% if value.name.count <= 38 %}
+                {{ value.name }}
+            {% else %}
+                {{ value.name|truncatechars:38 }}
+            {% endif %}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

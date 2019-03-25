@@ -1,0 +1,32 @@
+{% load static from static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mineral Hub | {% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'catalog/css/styles.css' %}">
+    </head>
+    <body>
+        <div class="bounds {% block class %}{% endblock %}">
+            <div class="grid-100">
+                <a href="{% url 'catalog:home' %}">
+                    <svg class="logo" viewBox="0 0 127.6 84.8" preserveasprectration="xMinYMin meet">
+                        <polygon points="42.7,84.8 49.6,79.4 40,62.5 51.2,43.5 51.2,43.5 25,0 0,55.6 "></polygon>
+                        <polygon class="logo--middle" points="52.9,79.5 52.9,79.5 84.8,80.1 59.7,35 43.3,62.4 "></polygon>
+                        <polygon points="170.6,100.4 127.6,61.4 110.3,13.5 110.3,13.5 70.3,48.1 70.3,48.1 88.3,80.5 95.3,81.4 95.3,81.4 "></polygon>
+                    </svg>
+                    <h1 class="logo_name text-centered">Mineral Hub</h1>
+                </a>
+                <p class="logo_text text-centered slogan">
+                    -- <span style="color: rgb(219, 5, 5);">So</span> Mineralistic! --
+                </p>
+            </div>
+            {% block content %}{% endblock %}
+        </div>
+        <div class="minerals__random">
+            {% for value in random_mineral %}
+            <a class="minerals__anchor" href="{% url 'catalog:detail' name=value.name pk=value.pk %}">Show random mineral</a>
+            {% endfor %}
+        </div>
+    </body>
+</html>
