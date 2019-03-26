@@ -6,12 +6,10 @@ verify_ssl = true
 [dev-packages]
 flake8 = "*"
 v = {editable = true,version = "*"}
-pylint = "*"
 
 [packages]
 django = "*"
-python = "*"
-django-nose = {editable = true,uri = "git://github.com/django-nose/django-nose.git"}
+django-nose = "*"
 coverage = "*"
 
 [requires]
