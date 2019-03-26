@@ -6,11 +6,13 @@ verify_ssl = true
 [dev-packages]
 flake8 = "*"
 v = {editable = true,version = "*"}
+pylint = "*"
 
 [packages]
 django = "*"
 django-nose = "*"
 coverage = "*"
+django-debug-toolbar = "*"
 
 [requires]
 python_version = "3.7"
