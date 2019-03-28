@@ -8,8 +8,13 @@ from django.shortcuts import render
 from .models import Minerals
 
 
-def mineral_list(request):
-    minerals = Minerals.objects.all()
+def mineral_list(request, letter='a'):
+    minerals = Minerals.objects.filter(name__startswith=letter)
+    return render(request, 'catalog/mineral_list.html', {'minerals': minerals})
+
+
+def mineral_list_sort_letter(request, letter):
+    minerals = Minerals.objects.filter(name__startswith=letter)
     return render(request, 'catalog/mineral_list.html', {'minerals': minerals})
 
 
