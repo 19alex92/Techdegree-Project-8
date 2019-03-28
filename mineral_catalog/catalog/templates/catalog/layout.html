@@ -21,18 +21,28 @@
                     -- <span style="color: rgb(219, 5, 5);">So</span> Mineralistic! --
                 </p>
             </div>
-            <div class="alphabet_search">
+            <div class="grid-70 alphabet_search">
                 {% for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
                     <a href="{% url 'catalog:sort_letter' letter=letter %}">{{ letter }}</a>
                 {% endfor %}
             </div>
-            <div>
+            <div class="grid-30">
                 <form type="get" action="{% url 'catalog:search' %}">
-                    <input type="text" name="search_box"  placeholder="Search..." >
+                    <input type="text" name="search_box"  placeholder="Search attributes..." >
                     <button type="submit" >Submit</button>
                 </form>
             </div>
             {% block content %}{% endblock %}
+            <div class="grid-15">
+                <ul>
+                    <li>By Mohs Scale Hardness:</li>
+                    {% for hardness in "123456789" %}
+                        <li class="group_search">
+                            <a href="{% url 'catalog:sort_hardness' hardness=hardness %}">{{ hardness }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
         <div class="minerals__random">
             {% for value in random_mineral %}

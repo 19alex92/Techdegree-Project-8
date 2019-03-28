@@ -33,14 +33,12 @@ def mineral_list_sort_group(request, group):
                                                          'minerals_group': minerals_group})
 
 
-#def mineral_list_search_box(request):
- #   if request.method == 'GET':
-  #      search_query = request.GET.get('search_box', None)
-   #     minerals = Minerals.objects.filter(name__icontains=search_query)
-    #minerals_group_raw = Minerals.objects.values('group').distinct()
-    #minerals_group = set(val for dic in minerals_group_raw for val in dic.values())
-    #return render(request, 'catalog/mineral_list.html', {'minerals': minerals,
-     #                                                    'minerals_group': minerals_group})
+def mineral_list_sort_hardness(request, hardness):
+    minerals = Minerals.objects.filter(mohs_scale_hardness__icontains=hardness)
+    minerals_group_raw = Minerals.objects.values('group').distinct()
+    minerals_group = set(val for dic in minerals_group_raw for val in dic.values())
+    return render(request, 'catalog/mineral_list.html', {'minerals': minerals,
+                                                         'minerals_group': minerals_group})
 
 
 def mineral_list_search_box(request):
