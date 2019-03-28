@@ -10,12 +10,26 @@ from .models import Minerals
 
 def mineral_list(request, letter='a'):
     minerals = Minerals.objects.filter(name__startswith=letter)
-    return render(request, 'catalog/mineral_list.html', {'minerals': minerals})
+    minerals_group_raw = Minerals.objects.values('group').distinct()
+    minerals_group = set(val for dic in minerals_group_raw for val in dic.values())
+    return render(request, 'catalog/mineral_list.html', {'minerals': minerals,
+                                                         'minerals_group': minerals_group})
 
 
 def mineral_list_sort_letter(request, letter):
     minerals = Minerals.objects.filter(name__startswith=letter)
-    return render(request, 'catalog/mineral_list.html', {'minerals': minerals})
+    minerals_group_raw = Minerals.objects.values('group').distinct()
+    minerals_group = set(val for dic in minerals_group_raw for val in dic.values())
+    return render(request, 'catalog/mineral_list.html', {'minerals': minerals,
+                                                         'minerals_group': minerals_group})
+
+
+def mineral_list_sort_group(request, group):
+    minerals = Minerals.objects.filter(group__icontains=group)
+    minerals_group_raw = Minerals.objects.values('group').distinct()
+    minerals_group = set(val for dic in minerals_group_raw for val in dic.values())
+    return render(request, 'catalog/mineral_list.html', {'minerals': minerals,
+                                                         'minerals_group': minerals_group})
 
 
 def mineral_detail(request, name, pk):
@@ -23,11 +37,14 @@ def mineral_detail(request, name, pk):
         minerals = Minerals.objects.filter(pk=pk)
         dict_minerals = collections.OrderedDict(Minerals.objects.filter(pk=pk)
                                                                 .values()[0])
+        minerals_group_raw = Minerals.objects.values('group').distinct()
+        minerals_group = set(val for dic in minerals_group_raw for val in dic.values())
     except Minerals.DoesNotExist:
         raise Http404("This page doesn't seem to exist")
     return render(request, 'catalog/mineral_detail.html',
                            {'minerals': minerals,
-                            'dict_minerals': dict_minerals})
+                            'dict_minerals': dict_minerals,
+                            'minerals_group': minerals_group})
 
 
 # def import_method(request):

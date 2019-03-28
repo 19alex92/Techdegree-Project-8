@@ -8,7 +8,18 @@
 
 {% block content %}
 
-<div class="grid-100 mineral__container">
+<div class="grid-20">
+    <ul>
+        <li>By Group:</li>
+        {% for group in minerals_group %}
+            <li class="group_search">
+                <a href="{% url 'catalog:sort_group' group=group %}">{{ group }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="grid-80 mineral__container">
     {% for value in minerals %}
         <h1 class="mineral__name">{{ value.name }}</h1>
         <div class="mineral__image-bg">

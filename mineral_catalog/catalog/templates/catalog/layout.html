@@ -23,7 +23,7 @@
             </div>
             <div class="alphabet_search">
                 {% for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
-                    <a href="{% url 'catalog:letter' letter=letter %}">{{ letter }}</a>
+                    <a href="{% url 'catalog:sort_letter' letter=letter %}">{{ letter }}</a>
                 {% endfor %}
             </div>
             {% block content %}{% endblock %}
