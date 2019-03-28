@@ -2,6 +2,7 @@
 # import os
 import collections
 
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render
 
@@ -32,10 +33,38 @@ def mineral_list_sort_group(request, group):
                                                          'minerals_group': minerals_group})
 
 
+#def mineral_list_search_box(request):
+ #   if request.method == 'GET':
+  #      search_query = request.GET.get('search_box', None)
+   #     minerals = Minerals.objects.filter(name__icontains=search_query)
+    #minerals_group_raw = Minerals.objects.values('group').distinct()
+    #minerals_group = set(val for dic in minerals_group_raw for val in dic.values())
+    #return render(request, 'catalog/mineral_list.html', {'minerals': minerals,
+     #                                                    'minerals_group': minerals_group})
+
+
 def mineral_list_search_box(request):
     if request.method == 'GET':
         search_query = request.GET.get('search_box', None)
-        minerals = Minerals.objects.filter(name__icontains=search_query)
+        minerals = Minerals.objects.filter(Q(name__icontains=search_query)
+                                           |Q(image_caption__icontains=search_query)
+                                           |Q(category__icontains=search_query)
+                                           |Q(group__icontains=search_query)
+                                           |Q(color__icontains=search_query)
+                                           |Q(streak__icontains=search_query)
+                                           |Q(diaphaneity__icontains=search_query)
+                                           |Q(cleavage__icontains=search_query)
+                                           |Q(formula__icontains=search_query)
+                                           |Q(strunz_classification__icontains=search_query)
+                                           |Q(crystal_system__icontains=search_query)
+                                           |Q(unit_cell__icontains=search_query)
+                                           |Q(crystal_symmetry__icontains=search_query)
+                                           |Q(mohs_scale_hardness__icontains=search_query)
+                                           |Q(luster__icontains=search_query)
+                                           |Q(optical_properties__icontains=search_query)
+                                           |Q(refractive_index__icontains=search_query)
+                                           |Q(crystal_habit__icontains=search_query)
+                                           |Q(specific_gravity__icontains=search_query))
     minerals_group_raw = Minerals.objects.values('group').distinct()
     minerals_group = set(val for dic in minerals_group_raw for val in dic.values())
     return render(request, 'catalog/mineral_list.html', {'minerals': minerals,
