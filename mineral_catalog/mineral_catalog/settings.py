@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,6 +26,12 @@ SECRET_KEY = 'z)!ren#a5(4-*9ml)3w+e!zet6f&%z-5(xc1mu!u2a7-f2^k38'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# --------------------------------------
+# Workarount where Django_Debug_Toolbar conflicts with django test
+TESTING_MODE = 'test' in sys.argv
+DEV_MODE = DEBUG and not TESTING_MODE
+# --------------------------------------
+
 ALLOWED_HOSTS = []
 
 
@@ -38,12 +45,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'catalog',
-    'django_nose',
-    'debug_toolbar',
+    'coverage',
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,7 +63,7 @@ ROOT_URLCONF = 'mineral_catalog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates',],
+        'DIRS': ['templates', ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,13 +131,14 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+# Part of the workaround where Django_Debug_Toolbar conflicts with django test
+if DEV_MODE:
+    INSTALLED_APPS += [
+        'debug_toolbar'
+    ]
 
-NOSE_ARGS = [
-    '--with-coverage',
-    '--cover-package=catalog',
-]
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
 
-DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': lambda x: True
-}
+    DEBUG_TOOLBAR_CONFIG = {
+        'SHOW_TOOLBAR_CALLBACK': lambda x: True
+    }

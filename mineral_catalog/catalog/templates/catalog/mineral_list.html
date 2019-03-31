@@ -1,6 +1,5 @@
 {% extends "catalog/layout.html" %}
 {% load static from static %}
-{% load static %}
 
 {% block title %}Index{% endblock %}
 
@@ -9,9 +8,9 @@
 <div class="grid-15">
     <ul>
         <li>By Group:</li>
-        {% for group in minerals_group %}
+        {% for min_group in minerals_group %}
             <li class="group_search">
-                <a href="{% url 'catalog:sort_group' group=group %}">{{ group }}</a>
+                <a {% if min_group == group %} style="font-weight: bolder; color: rgb(206, 86, 46);" {% endif %} href="{% url 'catalog:sort_group' group=min_group %}">{{ min_group }}</a>
             </li>
         {% endfor %}
     </ul>

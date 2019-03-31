@@ -22,8 +22,8 @@
                 </p>
             </div>
             <div class="grid-70 alphabet_search">
-                {% for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
-                    <a href="{% url 'catalog:sort_letter' letter=letter %}">{{ letter }}</a>
+                {% for character in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
+                    <a {% if character == letter %} style="font-weight: bolder; color: rgb(206, 86, 46);" {% endif %} href="{% url 'catalog:sort_letter' letter=character %}">{{ character }}</a>
                 {% endfor %}
             </div>
             <div class="grid-30">
@@ -36,13 +36,13 @@
             <div class="grid-15">
                 <ul>
                     <li>By Mohs Scale Hardness:</li>
-                    {% for hardness in "123456789" %}
+                    {% for scale in "123456789" %}
                         <li class="group_search">
-                            <a href="{% url 'catalog:sort_hardness' hardness=hardness %}">{{ hardness }}</a>
+                            <a {% if scale == hardness %} style="font-weight: bolder; color: rgb(206, 86, 46);" {% endif %} href="{% url 'catalog:sort_hardness' hardness=scale %}">{{ scale }}</a>
                         </li>
                     {% endfor %}
                     <li class="group_search">
-                        <a href="{% url 'catalog:sort_hardness' hardness='Not determined' %}">Not determined</a>
+                        <a {% if "Not determined" == hardness %}style="font-weight: bolder; color: rgb(206, 86, 46);"{% endif %} href="{% url 'catalog:sort_hardness' hardness='Not determined' %}">Not determined</a>
                     </li>
                 </ul>
             </div>

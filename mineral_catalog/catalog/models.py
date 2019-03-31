@@ -24,7 +24,7 @@ class Minerals(models.Model):
     specific_gravity = models.TextField(blank=True, default='')
 
     class Meta:
-        ordering = ['name',]
+        ordering = ['name', ]
 
     def __str__(self):
         return self.name

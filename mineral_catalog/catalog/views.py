@@ -12,61 +12,78 @@ from .models import Minerals
 def mineral_list(request, letter='a'):
     minerals = Minerals.objects.filter(name__startswith=letter)
     minerals_group_raw = Minerals.objects.values('group').distinct()
-    minerals_group = set(val for dic in minerals_group_raw for val in dic.values())
-    return render(request, 'catalog/mineral_list.html', {'minerals': minerals,
-                                                         'minerals_group': minerals_group})
+    minerals_group = set(val for dic in minerals_group_raw
+                         for val in dic.values())
+    return render(request, 'catalog/mineral_list.html',
+                  {'minerals': minerals,
+                   'letter': 'A',
+                   'minerals_group': minerals_group})
 
 
-def mineral_list_sort_letter(request, letter):
+def mineral_list_sort_letter(request, letter=None):
+    if not letter:
+        letter = 'A'
     minerals = Minerals.objects.filter(name__startswith=letter)
     minerals_group_raw = Minerals.objects.values('group').distinct()
-    minerals_group = set(val for dic in minerals_group_raw for val in dic.values())
-    return render(request, 'catalog/mineral_list.html', {'minerals': minerals,
-                                                         'minerals_group': minerals_group})
+    minerals_group = set(val for dic in minerals_group_raw
+                         for val in dic.values())
+    return render(request, 'catalog/mineral_list.html',
+                  {'minerals': minerals,
+                   'letter': letter,
+                   'minerals_group': minerals_group})
 
 
 def mineral_list_sort_group(request, group):
     minerals = Minerals.objects.filter(group__icontains=group)
     minerals_group_raw = Minerals.objects.values('group').distinct()
-    minerals_group = set(val for dic in minerals_group_raw for val in dic.values())
-    return render(request, 'catalog/mineral_list.html', {'minerals': minerals,
-                                                         'minerals_group': minerals_group})
+    minerals_group = set(val for dic in minerals_group_raw
+                         for val in dic.values())
+    return render(request, 'catalog/mineral_list.html',
+                  {'minerals': minerals,
+                   'group': group,
+                   'minerals_group': minerals_group})
 
 
 def mineral_list_sort_hardness(request, hardness):
     minerals = Minerals.objects.filter(mohs_scale_hardness__icontains=hardness)
     minerals_group_raw = Minerals.objects.values('group').distinct()
-    minerals_group = set(val for dic in minerals_group_raw for val in dic.values())
-    return render(request, 'catalog/mineral_list.html', {'minerals': minerals,
-                                                         'minerals_group': minerals_group})
+    minerals_group = set(val for dic in minerals_group_raw
+                         for val in dic.values())
+    return render(request, 'catalog/mineral_list.html',
+                  {'minerals': minerals,
+                   'hardness': hardness,
+                   'minerals_group': minerals_group})
 
 
 def mineral_list_search_box(request):
     if request.method == 'GET':
         search_query = request.GET.get('search_box', None)
-        minerals = Minerals.objects.filter(Q(name__icontains=search_query)
-                                           |Q(image_caption__icontains=search_query)
-                                           |Q(category__icontains=search_query)
-                                           |Q(group__icontains=search_query)
-                                           |Q(color__icontains=search_query)
-                                           |Q(streak__icontains=search_query)
-                                           |Q(diaphaneity__icontains=search_query)
-                                           |Q(cleavage__icontains=search_query)
-                                           |Q(formula__icontains=search_query)
-                                           |Q(strunz_classification__icontains=search_query)
-                                           |Q(crystal_system__icontains=search_query)
-                                           |Q(unit_cell__icontains=search_query)
-                                           |Q(crystal_symmetry__icontains=search_query)
-                                           |Q(mohs_scale_hardness__icontains=search_query)
-                                           |Q(luster__icontains=search_query)
-                                           |Q(optical_properties__icontains=search_query)
-                                           |Q(refractive_index__icontains=search_query)
-                                           |Q(crystal_habit__icontains=search_query)
-                                           |Q(specific_gravity__icontains=search_query))
+        minerals = Minerals.objects.filter(
+            Q(name__icontains=search_query) |
+            Q(image_caption__icontains=search_query) |
+            Q(category__icontains=search_query) |
+            Q(group__icontains=search_query) |
+            Q(color__icontains=search_query) |
+            Q(streak__icontains=search_query) |
+            Q(diaphaneity__icontains=search_query) |
+            Q(cleavage__icontains=search_query) |
+            Q(formula__icontains=search_query) |
+            Q(strunz_classification__icontains=search_query) |
+            Q(crystal_system__icontains=search_query) |
+            Q(unit_cell__icontains=search_query) |
+            Q(crystal_symmetry__icontains=search_query) |
+            Q(mohs_scale_hardness__icontains=search_query) |
+            Q(luster__icontains=search_query) |
+            Q(optical_properties__icontains=search_query) |
+            Q(refractive_index__icontains=search_query) |
+            Q(crystal_habit__icontains=search_query) |
+            Q(specific_gravity__icontains=search_query))
     minerals_group_raw = Minerals.objects.values('group').distinct()
-    minerals_group = set(val for dic in minerals_group_raw for val in dic.values())
-    return render(request, 'catalog/mineral_list.html', {'minerals': minerals,
-                                                         'minerals_group': minerals_group})
+    minerals_group = set(val for dic in minerals_group_raw
+                         for val in dic.values())
+    return render(request, 'catalog/mineral_list.html',
+                  {'minerals': minerals,
+                   'minerals_group': minerals_group})
 
 
 def mineral_detail(request, name, pk):
@@ -75,7 +92,8 @@ def mineral_detail(request, name, pk):
         dict_minerals = collections.OrderedDict(Minerals.objects.filter(pk=pk)
                                                                 .values()[0])
         minerals_group_raw = Minerals.objects.values('group').distinct()
-        minerals_group = set(val for dic in minerals_group_raw for val in dic.values())
+        minerals_group = set(val for dic in minerals_group_raw
+                             for val in dic.values())
     except Minerals.DoesNotExist:
         raise Http404("This page doesn't seem to exist")
     return render(request, 'catalog/mineral_detail.html',

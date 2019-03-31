@@ -1,3 +1,6 @@
 {
-    "python.pythonPath": "/Users/Alexander/.local/share/virtualenvs/Techdegree-Project-8-ZW_2GATe/bin/python"
+    "python.pythonPath": "/Users/Alexander/.local/share/virtualenvs/Techdegree-Project-8-ZW_2GATe/bin/python",
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true
 }

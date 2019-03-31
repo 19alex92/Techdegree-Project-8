@@ -10,9 +10,8 @@ pylint = "*"
 
 [packages]
 django = "*"
-django-nose = "*"
-coverage = "*"
 django-debug-toolbar = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.7"

@@ -23,7 +23,7 @@ urlpatterns = [
     path('', include('catalog.urls', namespace='catalog')),
 ]
 
-if settings.DEBUG:
+if settings.DEV_MODE:
     import debug_toolbar
     urlpatterns = [
         path('__debug__/', include(debug_toolbar.urls)),

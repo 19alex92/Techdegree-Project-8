@@ -210,11 +210,10 @@ table, p, ul { margin-bottom: 2.5rem; }
   padding-right: .12em;
 }
 
-.alphabet_search a:active{
+.alphabet_search .active{
   font-weight:bold;
   color: #0fee22;
 }
-
 .alphabet_search {
   text-align: center;
 }
